@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArexaHoliday — Hôtels & Véhicules Premium à Maurice | Devis & Acompte</title>
+    <meta name="description" content="Découvrez des hôtels partenaires à Grand Baie, Balaclava et Bel Ombre, et une flotte de véhicules premium. Demande de devis (hôtels) et acompte en ligne (véhicules).">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="img/arexaholiday-logo.png" alt="ArexaHoliday" class="logo-img">
+                    <span>ArexaHoliday</span>
+                </div>
+                <nav class="nav">
+                    <a href="#results-section" class="nav-link active">Hôtels</a>
+                    <a href="#vehicles-section" class="nav-link">Véhicules</a>
+                    <a href="#" class="nav-link">Expériences</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </nav>
+                <div class="header-actions">
+                    <select id="currency-selector" class="currency-dropdown">
+                        <option value="EUR">€ EUR</option>
+                        <option value="USD" selected>$ USD</option>
+                        <option value="MUR">Rs MUR</option>
+                    </select>
+                    <button class="btn-login">
+                        <i class="fas fa-user"></i>
+                        <span>Connexion</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Découvrez le Paradis Mauricien</h1>
+            <p class="hero-subtitle">Hôtels de luxe à Grand Baie, Balaclava & Bel Ombre</p>
+            
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <div class="search-field">
+                    <label><i class="fas fa-calendar-alt"></i> Arrivée</label>
+                    <input type="date" id="check-in" value="2026-06-01">
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-calendar-alt"></i> Départ</label>
+                    <input type="date" id="check-out" value="2026-06-02">
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-users"></i> Hôtes</label>
+                    <select id="guests-select">
+                        <option value="1">1 adulte</option>
+                        <option value="2" selected>2 adultes</option>
+                        <option value="3">3 adultes</option>
+                        <option value="4">4 adultes</option>
+                        <option value="5">5+ adultes</option>
+                    </select>
+                </div>
+                <button class="btn-search" onclick="scrollToResults()">
+                    <i class="fas fa-search"></i>
+                    Rechercher
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="results-section">
+        <div class="container">
+            <div class="content-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filters-sidebar">
+                    <div class="filters-header">
+                        <h2>Filtres</h2>
+                        <button class="btn-reset" onclick="resetFilters()">
+                            <i class="fas fa-redo"></i> Réinitialiser
+                        </button>
+                    </div>
+
+                    <!-- Zone Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Zone
+                        </h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="zone-filter" value="Grand Baie" checked>
+                                <span>Grand Baie</span>
+                                <span class="count" id="count-grand-baie">0</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="zone-filter" value="Balaclava" checked>
+                                <span>Balaclava</span>
+                                <span class="count" id="count-balaclava">0</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="zone-filter" value="Bel Ombre" checked>
+                                <span>Bel Ombre</span>
+                                <span class="count" id="count-bel-ombre">0</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Budget Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-dollar-sign"></i>
+                            Budget par nuit
+                        </h3>
+                        <div class="range-slider">
+                            <div class="range-values">
+                                <span id="min-price-display">$0</span>
+                                <span id="max-price-display">$2000+</span>
+                            </div>
+                            <input type="range" id="min-price" min="0" max="2000" value="0" step="50">
+                            <input type="range" id="max-price" min="0" max="2000" value="2000" step="50">
+                        </div>
+                    </div>
+
+                    <!-- Beach Proximity Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-water"></i>
+                            Proximité plage
+                        </h3>
+                        <div class="range-slider">
+                            <div class="range-values">
+                                <span id="beach-distance-display">0 - 3000m</span>
+                            </div>
+                            <input type="range" id="beach-distance" min="0" max="3000" value="3000" step="100">
+                        </div>
+                    </div>
+
+                    <!-- Amenities Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-star"></i>
+                            Équipements
+                        </h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="pool">
+                                <i class="fas fa-swimming-pool"></i>
+                                <span>Piscine</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="breakfast">
+                                <i class="fas fa-coffee"></i>
+                                <span>Petit-déjeuner</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="all_inclusive">
+                                <i class="fas fa-infinity"></i>
+                                <span>All Inclusive</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="wifi">
+                                <i class="fas fa-wifi"></i>
+                                <span>Wi-Fi gratuit</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="parking">
+                                <i class="fas fa-parking"></i>
+                                <span>Parking privé</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="ac">
+                                <i class="fas fa-snowflake"></i>
+                                <span>Climatisation</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="spa">
+                                <i class="fas fa-spa"></i>
+                                <span>Spa</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="amenity-filter" value="gym">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Salle de sport</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Eco-Tourism Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-leaf"></i>
+                            Éco-tourisme
+                        </h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="eco-certified">
+                                <span>Certifié uniquement</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="eco-all">
+                                <span>Inclure candidats</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Star Rating Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">
+                            <i class="fas fa-star"></i>
+                            Note minimum
+                        </h3>
+                        <div class="rating-buttons">
+                            <button class="rating-btn" data-rating="0">Tous</button>
+                            <button class="rating-btn" data-rating="3">3+</button>
+                            <button class="rating-btn" data-rating="4">4+</button>
+                            <button class="rating-btn" data-rating="4.5">4.5+</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Results Section -->
+                <section class="results-section">
+                    <div class="results-header">
+                        <div class="results-info">
+                            <h2><span id="results-count">0</span> hôtels trouvés</h2>
+                            <p id="results-subtitle">Maurice • Grand Baie, Balaclava, Bel Ombre</p>
+                        </div>
+                        <div class="sort-controls">
+                            <label>Trier par:</label>
+                            <select id="sort-select">
+                                <option value="recommended">Recommandés</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                                <option value="rating">Note</option>
+                                <option value="beach">Proximité plage</option>
+                                <option value="eco">Éco-tourisme</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Cards Container -->
+                    <div id="hotels-container" class="hotels-grid">
+                        <!-- Les cartes hôtels seront générées dynamiquement par JavaScript -->
+                    </div>
+
+                    <!-- Vehicles Section (Acompte 20% - simulation Stripe) -->
+                    <section class="vehicles-section" id="vehicles-section" aria-label="Véhicules">
+                        <div class="section-head">
+                            <h2 class="section-title">Véhicules premium</h2>
+                            <p class="section-subtitle">Acompte <strong>20%</strong> en ligne (simulation Stripe). Solde réglable à l’arrivée.</p>
+                        </div>
+
+                        <!-- Inquiry Modal (Hotels) -->
+                    <div id="inquiry-modal" class="modal">
+                        <div id="inquiry-overlay" class="modal-overlay"></div>
+                        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Demande de devis hôtel">
+                            <div class="modal-head">
+                                <div>
+                                    <div class="modal-title">Demande de devis</div>
+                                    <div class="modal-subtitle">Hôtel partenaire — pas de réservation directe</div>
+                                </div>
+                                <button id="inquiry-close" class="modal-close" aria-label="Fermer">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div id="inquiry-body" class="modal-body"></div>
+                            <div class="modal-foot">
+                                <div id="inquiry-status" class="modal-status"></div>
+                                <button id="inquiry-send-btn" class="btn-primary">
+                                    Envoyer la demande (simulation)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vehicle-controls">
+                            <div class="search-field compact">
+                                <label><i class="fas fa-user-tie"></i> Option</label>
+                                <select id="vehicle-mode">
+                                    <option value="with_driver" selected>Avec chauffeur</option>
+                                    <option value="without_driver">Sans chauffeur</option>
+                                </select>
+                            </div>
+                            <div class="search-field compact">
+                                <label><i class="fas fa-clock"></i> Durée</label>
+                                <input id="vehicle-days" type="number" min="1" step="1" value="1">
+                            </div>
+                        </div>
+
+                        <div id="vehicles-container" class="vehicles-grid"></div>
+                    </section>
+
+                    <!-- Vehicle Payment Modal -->
+                    <div id="vehicle-payment-modal" class="modal">
+                        <div id="vehicle-payment-overlay" class="modal-overlay"></div>
+                        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Paiement acompte">
+                            <div class="modal-head">
+                                <div>
+                                    <div class="modal-title">Acompte véhicule (simulation Stripe)</div>
+                                    <div class="modal-subtitle">Démo — aucun débit réel</div>
+                                </div>
+                                <button id="vehicle-payment-close" class="modal-close" aria-label="Fermer">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div id="vehicle-payment-body" class="modal-body"></div>
+                            <div class="modal-foot">
+                                <div id="vehicle-payment-status" class="modal-status"></div>
+                                <button id="vehicle-pay-btn" class="btn-primary">
+                                    Continuer vers Stripe (simulation)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loading-state" class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Chargement des hôtels...</p>
+                    </div>
+
+                    <!-- No Results State -->
+                    <div id="no-results" class="no-results" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <h3>Aucun résultat trouvé</h3>
+                        <p>Essayez d'ajuster vos filtres pour voir plus d'hôtels</p>
+                        <button class="btn-primary" onclick="resetFilters()">Réinitialiser les filtres</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ArexaHoliday</h3>
+                    <p>Votre portail vers les plus beaux hôtels de l'Île Maurice</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Destinations</h4>
+                    <ul>
+                        <li><a href="#">Grand Baie</a></li>
+                        <li><a href="#">Balaclava</a></li>
+                        <li><a href="#">Bel Ombre</a></li>
+                        <li><a href="#">Toutes les zones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Réservation</a></li>
+                        <li><a href="#">Éco-tourisme</a></li>
+                        <li><a href="#">Guide voyage</a></li>
+                        <li><a href="#">Assistance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Informations</h4>
+                    <ul>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Conditions générales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ArexaHoliday. Tous droits réservés.</p>
+                <p>Développé avec <i class="fas fa-heart"></i> pour l'Île Maurice</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/hotels-data.js"></script>
+    <script src="js/vehicles-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/vehicles.js"></script>
+</body>
+</html>
